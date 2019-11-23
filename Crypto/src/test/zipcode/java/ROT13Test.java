@@ -88,4 +88,10 @@ public class ROT13Test {
         assertTrue(actual.equals(Q1));
     }
 
+    @Test
+    public void shiftCheckTest(){
+        ROT13 test = new ROT13('a','c');
+        Character a = test.shiftCheck('y');
+        System.out.println(a);
+    }
 }

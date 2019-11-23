@@ -1,59 +1,60 @@
 public class ROT13 {
-    String message, encryptedMessage = "";
+    Integer shift;
 
 
     ROT13(Character cs, Character cf) {
+        shift = cf - cs;
     }
 
     ROT13() {
+        shift = 13;
     }
 
 
     public String crypt(String text) throws UnsupportedOperationException {
-
-        return "";
+        return encrypt(text);
     }
 
     public String encrypt(String text) {
-        return text;
+        String ans ="";
+
+        for (int i = 0; i < text.length(); i++){
+            Character c = text.charAt(i);
+            ans += shiftCheck(c);
+        }
+
+        return ans;
     }
 
     public String decrypt(String text) {
-        return text;
+        shift = 26 - shift;
+        return  encrypt(text);
     }
 
     public static String rotate(String s, Character c) {
-        int key;
-        char ch;
-        String end = "";
-        if (Character.isUpperCase(c)) {
-            key = c - 'A';
-        } else {
-            key = c - 'a';
+        Integer startIndex = s.indexOf(c);
+        String start = s.substring(startIndex);
+        String end = s.substring(0, startIndex);
+        return start + end;
+    }
+
+    public Character shiftCheck(Character before){
+        Character temp;
+        Character now;
+
+        if(before >= 'a' && before <= 'z'){
+            temp = (char) (before + shift);
+            now = (temp > 'z') ? (char) (temp - 'z' +'a' -1) : temp;
+            return now;
         }
 
-        for (int i = 0; i < s.length(); i++) {
-            ch = s.charAt(i);
-
-            if ((int) ch >= (int) 'a' && (int) ch <= (int) 'z') {
-                ch = (char) (ch + key);
-
-
-                if ((int) ch > (int) 'z') {
-                    ch = (char) (ch - 'z' + 'a' - 1);
-                }
-                end += (char) ch;
-
-            } else if ((int) ch >= (int) 'A' && (int) ch <= (int) 'Z') {
-                ch = (char) (ch - 'Z' + 'A' - 1);
-                if ((int) ch > (int) 'Z') {
-                    ch = (char) (ch - 'Z' + 'A' - 1);
-                }
-                end += (char) ch;
-            }
+        else if(before >= 'A' && before <= 'Z'){
+            temp = (char) (before + shift);
+            now = (temp > 'Z') ? (char) (temp - 'Z' +'A' -1) : temp;
+            return now;
         }
 
-        return end;
+        else { return  before; }
     }
 
 }
